@@ -1,0 +1,149 @@
+[
+    {
+    "title":"Post 01 A",
+    "description":"Description Here",
+    "categories":"Tech",
+    "status":"Approved",
+    "postViews":"10440",
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 02 A",
+    "description":"Description Here",
+    "categories":"Tech",
+    "status":"Approved",
+    "postViews":"100",
+    "featured":true,
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 03 A",
+    "description":"Description Here",
+    "categories":"Tech",
+    "status":"Approved",
+    "postViews":"10460",
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 03 A",
+    "description":"Description Here",
+    "categories":"Tech",
+    "status":"Approved",
+    "postViews":"10460",
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 04 A",
+    "description":"Description Here",
+    "categories":"Music",
+    "status":"Approved",
+    "postViews":"100",
+    "featured":true,
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 05 A",
+    "description":"Description Here",
+    "categories":"Music",
+    "status":"Approved",
+    "postViews":"1200",
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 06 A",
+    "description":"Description Here",
+    "categories":"Books",
+    "status":"Approved",
+    "postViews":"12003",
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 07 A",
+    "description":"Description Here",
+    "categories":"Books",
+    "status":"Approved",
+    "postViews":"2003",
+    "featured":true,
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 08 A",
+    "description":"Description Here",
+    "categories":"Programming",
+    "status":"Approved",
+    "postViews":"221",
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 09 A",
+    "description":"Description Here",
+    "categories":"Programming",
+    "status":"Approved",
+    "postViews":"55",
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    },
+    {
+    "title":"Post 10 A",
+    "description":"Description Here",
+    "categories":"Programming",
+    "status":"Approved",
+    "postViews":"20745",
+    "featured":true,
+    "images":[
+        {
+            "public_id":"34567890",
+            "url":"image.com"
+        }
+    ]
+    }
+]
