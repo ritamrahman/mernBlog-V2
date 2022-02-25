@@ -3,8 +3,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import Slider from "react-slick";
-import PostCard from "./Card/postCard";
-let post = [1, 2, 3, 4, 5];
 
 function carousel({ children, slidesItem }) {
   var settings = {

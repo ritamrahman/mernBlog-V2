@@ -4,7 +4,7 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 
-function Status({ width, paddingX, paddingY, marginX, marginY }) {
+function Status({ width, paddingX, paddingY, marginX, marginY, views, likes, commentCount }) {
   return (
     <>
       <div
@@ -19,15 +19,15 @@ function Status({ width, paddingX, paddingY, marginX, marginY }) {
       >
         {/* Like */}
         <div className="post_stat postStat_V d-flex justify-content-start align-items-center">
-          <FavoriteBorderOutlinedIcon /> <p className=" mb-0 px-2">7K</p>
+          <FavoriteBorderOutlinedIcon /> <p className=" mb-0 px-2">{likes}</p>
         </div>
         {/* views */}
         <div className="post_stat postStat_V d-flex justify-content-start align-items-center">
-          <RemoveRedEyeOutlinedIcon /> <p className=" mb-0 px-2">9987</p>
+          <RemoveRedEyeOutlinedIcon /> <p className=" mb-0 px-2">{views}</p>
         </div>
         {/* Comment */}
         <div className="post_stat postStat_V d-flex justify-content-start align-items-center">
-          <ChatBubbleOutlineOutlinedIcon /> <p className=" mb-0 px-2">540</p>
+          <ChatBubbleOutlineOutlinedIcon /> <p className=" mb-0 px-2">{commentCount}</p>
         </div>
       </div>
     </>
