@@ -13,16 +13,27 @@ import { getAllPosts, getAllTrendingPosts } from "./Redux/actions/postsAction";
 function Home() {
   const dispatch = useDispatch();
 
+  const [postss, setPostss] = useState({});
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
   // select all posts
   const { posts } = useSelector((state) => state.allPosts);
   const { trendingPosts } = useSelector((state) => state.allTrendingPosts);
 
   useEffect(() => {
-    dispatch(getAllPosts());
+    // get recent posts
+    dispatch(getAllPosts(page));
+    // get trending posts
     dispatch(getAllTrendingPosts());
   }, [dispatch]);
 
-  console.log("TRPost:", trendingPosts);
+  // show More Function
+  const showMore = () => {
+    setPage(page + 1);
+    // get recent posts
+    dispatch(getAllPosts(page));
+  };
 
   return (
     <div className="App">
@@ -43,7 +54,7 @@ function Home() {
           <h1 className="ct_txt w-100 text-center pt-5">Trending Post</h1>
           <div className="container">
             <div className="row py-5">
-              {trendingPosts &&
+              {trendingPosts.length > 0 ? (
                 trendingPosts.map((post) => (
                   <div className="col-lg-4 col-md-6 col-sm-12">
                     <PostCard
@@ -52,12 +63,15 @@ function Home() {
                       authorName={post.user.name}
                       description={post.description}
                       views={post.postViews}
-                      likes={post.likes}
+                      likes={post.likesCount}
                       commentCount={post.commentCount}
                       categories={post.categories}
                     />
                   </div>
-                ))}
+                ))
+              ) : (
+                <h5>no post found</h5>
+              )}
             </div>
           </div>
 
@@ -65,28 +79,33 @@ function Home() {
           <h1 className="ct_txt w-100 text-center pt-5">Recent Post</h1>
           <div className="container">
             <div className="row py-5">
-              {posts &&
+              {posts.length > 0 ? (
                 posts.map((post) => (
-                  <div className="col-lg-4 col-md-6 col-sm-12">
+                  <div className="col-lg-4 col-md-6 col-sm-12 py-4">
                     <RecentPost_Card
                       link={post._id}
                       title={post.title}
                       authorName={post.user.name}
                       description={post.description}
                       views={post.postViews}
-                      likes={post.likes}
+                      likes={post.likesCount}
                       commentCount={post.commentCount}
                       categories={post.categories}
                     />
                   </div>
-                ))}
+                ))
+              ) : (
+                <h5>no post found</h5>
+              )}
             </div>
             <div className="d-flex justify-content-center my-3">
-              <button type="button" id="signUp" className="c_btn">
-                <a className="text-decoration-none" href="#">
+              {posts.length > 0 ? (
+                <button type="button" id="signUp" className="c_btn" onClick={showMore}>
                   Show More
-                </a>
-              </button>
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           {/* <div className="w-100 ">

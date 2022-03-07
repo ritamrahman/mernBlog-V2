@@ -31,9 +31,9 @@ exports.displayAllPosts = catchAsyncErrors(async (req, res, next) => {
 
 // Get single posts => /api/post/:id
 exports.getSinglePost = catchAsyncErrors(async (req, res, next) => {
-  let post = await Post.find({ _id: req.params.id, status: "Approved" }).populate("user", "name -_id");
+  let post = await Post.findOne({ _id: req.params.id, status: "Approved" }).populate("user", "name -_id");
 
-  if (!post || post.status !== "Approved") {
+  if (!post) {
     return next(new ErrorHandler("no post found", 404));
   }
 
@@ -42,7 +42,7 @@ exports.getSinglePost = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    likesCount: post.likes.length,
+    // likesCount: post.likes.length,
     // commentsCount: post.comments.length,
     post,
   });
@@ -74,7 +74,7 @@ exports.getRelatedPosts = catchAsyncErrors(async (req, res, next) => {
 
 // Get trending posts => /api/posts/trending (on views)
 exports.getTrendingPosts = catchAsyncErrors(async (req, res, next) => {
-  const post = await Post.find({ status: "Approved" }).sort({ postViews: -1 }).limit(5);
+  const post = await Post.find({ status: "Approved" }).sort({ postViews: -1 }).limit(3);
 
   res.status(200).json({
     success: true,
@@ -228,12 +228,19 @@ exports.likePost = catchAsyncErrors(async (req, res, next) => {
   const logUser = await req.user.id.toString();
 
   if (!post.likes.includes(logUser)) {
+    // if not include LogUser id then increase likesCount by +1
+    await post.updateOne({ $inc: { likesCount: 1 } });
+    // and adding LogUser id in likes array
     await post.updateOne({ $push: { likes: logUser } });
+
     res.status(200).json({
       success: true,
       message: "like added successfully",
     });
   } else {
+    // if not include LogUser id then increase likesCount by +1
+    await post.updateOne({ $inc: { likesCount: -1 } });
+    // and adding LogUser id in likes array
     await post.updateOne({ $pull: { likes: logUser } });
     res.status(200).json({
       success: true,

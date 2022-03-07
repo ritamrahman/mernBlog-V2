@@ -7,12 +7,6 @@ const postSchema = new mongoose.Schema(
       required: [true, "Please enter a title"],
       maxLength: [100, "Title must be at least 100 characters"],
     },
-    // categories: {
-    //   type: mongoose.Schema.ObjectId,
-    //   ref: "Category",
-    //   required: true,
-    //   autopopulate: { select: "name -_id" },
-    // },
     categories: {
       type: String,
       required: true,
@@ -27,6 +21,10 @@ const postSchema = new mongoose.Schema(
       default: 0,
     },
     postViews: { type: Number, default: 0 },
+    likesCount: {
+      type: Number,
+      default: 0,
+    },
     featured: { type: Boolean, default: false },
     description: {
       type: String,
@@ -54,6 +52,7 @@ const postSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+
     comments: [
       {
         type: mongoose.Types.ObjectId,

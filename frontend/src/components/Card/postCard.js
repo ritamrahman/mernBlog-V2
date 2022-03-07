@@ -3,7 +3,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Status from "./Status";
 import { Link } from "react-router-dom";
 
-function postCard({ link, title, categories, authorName, avatar, description, views, likes, commentCount }) {
+function postCard({ link, title, categories, authorName, avatar, description, views, likesCount, commentCount }) {
   return (
     <>
       <div className="postCard card">
@@ -30,10 +30,10 @@ function postCard({ link, title, categories, authorName, avatar, description, vi
             <p className="card-text px-2">{authorName}</p>
           </div>
           {/* discription */}
-          <p className="card-text py-3">{description}</p>
+          <p className=" card-text py-3 overflow-hidden">{description}</p>
 
           {/* post status */}
-          <Status views={views} likes={likes} commentCount={commentCount} />
+          <Status views={views} likes={likesCount} commentCount={commentCount} />
         </div>
       </div>
     </>

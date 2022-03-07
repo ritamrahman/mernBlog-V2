@@ -5,3 +5,15 @@ export const ALL_POSTS_FAIL = "ALL_POSTS_FAIL";
 export const ALL_Trending_POSTS_REQUEST = "ALL_Trending_POSTS_REQUEST";
 export const ALL_Trending_POSTS_SUCCESS = "ALL_Trending_POSTS_SUCCESS";
 export const ALL_Trending_POSTS_FAIL = "ALL_Trending_POSTS_FAIL";
+
+export const POST_DETAILS_REQUEST = "POST_DETAILS_REQUEST";
+export const POST_DETAILS_SUCCESS = "POST_DETAILS_SUCCESS";
+export const POST_DETAILS_FAIL = "POST_DETAILS_FAIL";
+
+export const LIKE_REQUEST = "LIKE_REQUEST";
+export const LIKE_SUCCESS = "LIKE_SUCCESS";
+export const LIKE_FAIL = "LIKE_FAIL";
+
+export const UNLIKE_REQUEST = "UNLIKE_REQUEST";
+export const UNLIKE_SUCCESS = "UNLIKE_SUCCESS";
+export const UNLIKE_FAIL = "UNLIKE_FAIL";

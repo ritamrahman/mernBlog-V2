@@ -229,6 +229,10 @@ margin: 0 5px;
     box-shadow: 0px 2px 4px 1px rgb(0 0 0 / 37%) !important;
             
 }
+.postCard>div>p{
+  max-height: 140px !important;
+  padding: 16px 2px !important;
+}
 
 .post_avatar{
 width: 30px;
@@ -261,10 +265,10 @@ post_stat>p{
     /* margin: 0 10px 30px 10px; */
       box-shadow: 0px 0px 4px 0px #00000033, 0px 0px 5px 1px #00000033;
 }
-.recentPost_card>img{
-   /* border-radius: 15px !important; */
-    /* box-shadow: 0px 2px 4px 1px rgb(0 0 0 / 37%) !important; */
-            
+.recentPost_card>div>p{
+  max-height: 93px !important;
+  margin: 0 !important;
+  padding: 16px 0 0 0 !important;
 }
 
 .rc_body>h4{
@@ -298,4 +302,7 @@ post_stat>p{
 }
 
 
-
+/* Login Modal */
+.btn-close{
+  background: none !important
+}

@@ -31,7 +31,7 @@ function RecentPost_Card({ link, title, categories, authorName, avatar, descript
             <p className="card-text px-2">{authorName}</p>
           </div>
           {/* discription */}
-          <p className="card-text py-3">{description}</p>
+          <p className="card-text overflow-hidden py-3">{description}</p>
 
           {/* post status */}
           <Status views={views} likes={likes} commentCount={commentCount} />
