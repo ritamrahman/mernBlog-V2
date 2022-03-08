@@ -1,6 +1,13 @@
 import axios from "axios";
 
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL } from "../constants/auth.js";
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOAD_CURRENT_USER_REQUEST,
+  LOAD_CURRENT_USER_SUCCESS,
+  LOAD_CURRENT_USER_FAIL,
+} from "../constants/auth.js";
 
 // user login
 export const userLogin = (email, password) => async (dispatch) => {
@@ -16,6 +23,27 @@ export const userLogin = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
+      payload: error.response.data.errMessage,
+    });
+  }
+};
+
+// load current user
+export const loadCurrentUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_CURRENT_USER_REQUEST });
+
+    const { data } = await axios.get("/api/me");
+
+    console.log("CRuser", { data });
+
+    dispatch({
+      type: LOAD_CURRENT_USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOAD_CURRENT_USER_FAIL,
       payload: error.response.data.errMessage,
     });
   }
