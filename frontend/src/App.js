@@ -11,12 +11,10 @@ import store from "./Redux/store.js";
 // load current user on page refresh
 
 function App() {
-  // const dispatch = useDispatch();
-
   useEffect(() => {
-    console.log("dispatch");
+    // console.log("dispatch");
     store.dispatch(loadCurrentUser());
-    console.log("dispatch end");
+    // console.log("dispatch end");
   }, []);
   const path = window.location.pathname;
   return (

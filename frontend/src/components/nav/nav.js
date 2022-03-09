@@ -22,7 +22,7 @@ const myFun = () => {
 };
 
 function Nav() {
-  const { loading, isAuthenticated, error } = useSelector((state) => state.auth);
+  const { user, loading, isAuthenticated, error } = useSelector((state) => state.auth);
 
   const [pathName, setPathName] = useState("");
 
@@ -58,37 +58,97 @@ function Nav() {
 
           {/* right side start */}
           <div className="right_side w-25">
-            <div className=" d-flex justify-content-center align-items-center pe-5">
-              <button type="button" id="signUp" className="c_btn">
-                <Link className="text-decoration-none">Sing Up</Link>
-                {/* Sing Up */}
-              </button>
+            {!loading && user ? (
+              <>
+                {/* btn group start */}
+                <div className=" d-flex justify-content-around align-items-center pe-5">
+                  {/* create post btn */}
+                  <button className="btn btn-outline-primary">
+                    <Link className="text-decoration-none">Create post</Link>
+                  </button>
 
-              <button type="button" id="login" className="c_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <span className="text-decoration-none">Login</span>
-              </button>
+                  {/* // Dropdown btn start */}
+                  <>
+                    <div className="dropdownBTN">
+                      <div className="dropdown">
+                        <span
+                          className=" dropdown-toggle"
+                          type=""
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          Hello {user.name}
+                        </span>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                          <li>
+                            {user.role !== "user" && (
+                              <Link className="dropdown-item" to="#">
+                                Dashboard
+                              </Link>
+                            )}
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" to="#">
+                              profile
+                            </Link>
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" to="#">
+                              Logout
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </>
+                  {/* // Dropdown btn end */}
+                </div>
+                {/* btn group end */}
+              </>
+            ) : (
+              <>
+                {/* btn group start */}
+                <div className=" d-flex justify-content-center align-items-center pe-5">
+                  <button type="button" id="signUp" className="c_btn">
+                    <Link className="text-decoration-none">Sing Up</Link>
+                    {/* Sing Up */}
+                  </button>
 
-              {/* Modal start */}
-              <div
-                className="modal fade"
-                id="exampleModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
-                    <div className="modal-body">
-                      {/* form start */}
-                      <Login />
-                      {/* form end */}
+                  <button
+                    type="button"
+                    id="login"
+                    className="c_btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    <span className="text-decoration-none">Login</span>
+                  </button>
+
+                  {/* Modal start */}
+                  <div
+                    className="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
+                        <div className="modal-body">
+                          {/* form start */}
+                          <Login />
+                          {/* form end */}
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  {/* Modal end*/}
                 </div>
-              </div>
-              {/* Modal end*/}
-            </div>
+                {/* btn group end */}
+              </>
+            )}
           </div>
           {/* right side end */}
         </nav>
@@ -104,7 +164,7 @@ function Nav() {
         {/* <!-- links --> */}
         <ul className="links">
           <li>
-            <a href="#">Home</a>
+            <Link to="#">Home</Link>
           </li>
         </ul>
       </aside>
@@ -114,24 +174,3 @@ function Nav() {
 }
 
 export default Nav;
-
-{
-  /* <div 
-class="modal fade"
- id="exampleModal"
-  tabindex="-1"
-   aria-labelledby="exampleModalLabel" 
-   style="display: none;" 
-   aria-hidden="true">
-  </div>
-
-// show
- <div
-  class="modal fade show" 
-  id="exampleModal" 
-  tabindex="-1" 
-  aria-labelledby="exampleModalLabel"
-   style="display: block;" 
-   aria-modal="true" 
-   role="dialog"> */
-}

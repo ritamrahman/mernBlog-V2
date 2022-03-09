@@ -35,12 +35,11 @@ export const loadCurrentUser = () => async (dispatch) => {
 
     const { data } = await axios.get("/api/me");
 
-    console.log("CRuser", { data });
-
     dispatch({
       type: LOAD_CURRENT_USER_SUCCESS,
       payload: data.user,
     });
+    console.log("data", data.user);
   } catch (error) {
     dispatch({
       type: LOAD_CURRENT_USER_FAIL,

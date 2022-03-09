@@ -13,13 +13,13 @@ exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Please log in first", 401));
   }
 
-  const user = await User.findById(logUser);
+  const userInfo = await User.findById(logUser);
 
-  const { posts, ...userInfo } = user._doc;
+  const { posts, ...user } = userInfo._doc;
 
   res.status(200).json({
     success: true,
-    userInfo,
+    user,
   });
 });
 
