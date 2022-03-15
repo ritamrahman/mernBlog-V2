@@ -12,7 +12,15 @@ import {
   LIKE_SUCCESS,
   LIKE_FAIL,
   RESET_REACTION,
+  RELATED_POSTS_REQUEST,
+  RELATED_POSTS_SUCCESS,
+  RELATED_POSTS_FAIL,
 } from "../constants/postConstant";
+
+const initialState = {
+  postDetails: {},
+  relatedPosts: [],
+};
 
 // Get all Recent post
 export const postReducer = (state = { posts: [] }, action) => {
@@ -67,52 +75,61 @@ export const trendingPostsReducer = (state = { trendingPosts: [] }, action) => {
 };
 
 // Get single post
-export const getSinglePostReducer = (postDetails = {}, action) => {
+export const getSinglePostReducer = (state = initialState, action) => {
   switch (action.type) {
     case POST_DETAILS_REQUEST:
+    case RELATED_POSTS_REQUEST:
       return {
-        ...postDetails,
+        ...state,
         loading: false,
       };
 
     case LIKE_REQUEST:
       return {
-        ...postDetails,
+        ...state,
         loading: true,
         reaction: "",
       };
 
     case POST_DETAILS_SUCCESS:
       return {
-        ...postDetails,
+        ...state,
         loading: false,
         postDetails: action.payload,
       };
 
+    case RELATED_POSTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        relatedPosts: action.payload,
+      };
+
     case LIKE_SUCCESS:
       return {
-        ...postDetails,
+        ...state,
         loading: false,
         reaction: action.payload,
       };
 
     case RESET_REACTION:
       return {
-        ...postDetails,
+        ...state,
         loading: false,
         reaction: "",
       };
 
     case POST_DETAILS_FAIL:
+    case RELATED_POSTS_FAIL:
     case LIKE_FAIL:
       return {
-        ...postDetails,
+        ...state,
         loading: false,
         error: action.payload,
       };
 
     default:
-      return postDetails;
+      return state;
   }
 };
 

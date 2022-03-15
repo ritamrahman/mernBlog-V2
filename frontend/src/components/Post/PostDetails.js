@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 import AuthorPopularCard from "../Card/AuthorPopularCard";
+import RecentPost_Card from "../Card/RecentPost_Card";
 import LeftSide from "../Layout/LeftSide";
 import Comment from "../Comment/Comment";
 
@@ -24,7 +25,7 @@ function PostDetails({ match }) {
 
   useEffect(() => {
     dispatch(getSinglePost(match.params.id));
-    // dispatch(getRelatedPosts(match.params.id));
+    dispatch(getRelatedPosts(match.params.id));
     reaction !== "" && toast.success(reaction);
     dispatch({ type: RESET_REACTION });
   }, [dispatch, match.params.id, reaction]);
@@ -110,7 +111,7 @@ function PostDetails({ match }) {
         <h2 className="py-1">You may like also</h2>
         <div className="container">
           <div className="row py-5">
-            {/* {relatedPosts.length > 0 ? (
+            {relatedPosts.length > 0 ? (
               relatedPosts.map((post) => (
                 <div className="col-lg-4 col-md-6 col-sm-12">
                   <RecentPost_Card
@@ -127,7 +128,7 @@ function PostDetails({ match }) {
               ))
             ) : (
               <h5>no post found</h5>
-            )} */}
+            )}
           </div>
         </div>
       </div>
