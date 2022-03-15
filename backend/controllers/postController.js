@@ -228,14 +228,15 @@ exports.likePost = catchAsyncErrors(async (req, res, next) => {
   const logUser = await req.user.id.toString();
 
   if (!post.likes.includes(logUser)) {
-    // if not include LogUser id then increase likesCount by +1
-    await post.updateOne({ $inc: { likesCount: 1 } });
     // and adding LogUser id in likes array
     await post.updateOne({ $push: { likes: logUser } });
+    // if not include LogUser id then increase likesCount by +1
+    await post.updateOne({ $inc: { likesCount: 1 } });
 
     res.status(200).json({
       success: true,
       message: "like added successfully",
+      post,
     });
   } else {
     // if not include LogUser id then increase likesCount by +1
@@ -245,6 +246,7 @@ exports.likePost = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "like removed successfully",
+      post,
     });
   }
 });
@@ -325,5 +327,26 @@ exports.deleteUserPost = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Post deleted",
+  });
+});
+
+//  Delete All posts => /api/admin/posts/deleteall
+exports.deleteAllPosts = catchAsyncErrors(async (req, res, next) => {
+  const post = await Post.find({});
+  const allComments = await Comment.find({});
+
+  if (!post) {
+    return next(new ErrorHandler("Post not found", 404));
+  }
+
+  // delete all comments on this post
+  await Comment.deleteMany({ allComments });
+
+  // delete this post
+  await Post.deleteMany({ post });
+
+  res.status(200).json({
+    success: true,
+    message: "All Posts/Comments deleted",
   });
 });

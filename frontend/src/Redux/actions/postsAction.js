@@ -12,9 +12,9 @@ import {
   LIKE_REQUEST,
   LIKE_SUCCESS,
   LIKE_FAIL,
-  UNLIKE_REQUEST,
-  UNLIKE_SUCCESS,
-  UNLIKE_FAIL,
+  RELATED_POSTS_REQUEST,
+  RELATED_POSTS_SUCCESS,
+  RELATED_POSTS_FAIL,
 } from "../constants/postConstant";
 
 // Get all  recent posts
@@ -60,6 +60,8 @@ export const getSinglePost = (id) => async (dispatch) => {
 
     const { data } = await axios.get(`/api/post/${id}`);
 
+    // console.log("data", data);
+
     dispatch({ type: POST_DETAILS_SUCCESS, payload: data.post });
   } catch (error) {
     dispatch({
@@ -74,19 +76,31 @@ export const likeUnlikePost = (id) => async (dispatch) => {
   try {
     dispatch({ type: LIKE_REQUEST });
 
-    const host = window.location.host;
+    const { data } = await axios.put(`/api/post/${id}/like`);
+    // console.log("likedata", data);
 
-    const config = {
-      headers: { "Content-Type": "application/json" },
-    };
-
-    const { data } = await axios.put(`/api/post/${id}/like`, config);
-
-    dispatch({ type: LIKE_SUCCESS, payload: data });
+    dispatch({ type: LIKE_SUCCESS, payload: data.message });
   } catch (error) {
     dispatch({
       type: LIKE_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.errMessage,
+    });
+  }
+};
+
+// Get single post
+export const getRelatedPosts = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: RELATED_POSTS_REQUEST });
+
+    const { data } = await axios.get(`/api/post/${id}/related`);
+    console.log("first", data.relatedPosts);
+
+    dispatch({ type: RELATED_POSTS_SUCCESS, payload: data.relatedPosts });
+  } catch (error) {
+    dispatch({
+      type: RELATED_POSTS_FAIL,
+      payload: error.response.data.errMessage,
     });
   }
 };

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import CTCard from "./components/Card/ctCard.js";
 import Hero from "./components/Hero/hero.js";
-import Carousel from "./components/carousel.js";
 import RecentPost_Card from "./components/Card/RecentPost_Card";
 import PostCard from "./components/Card/postCard";
 
@@ -13,9 +12,7 @@ import { getAllPosts, getAllTrendingPosts } from "./Redux/actions/postsAction";
 function Home() {
   const dispatch = useDispatch();
 
-  const [postss, setPostss] = useState({});
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
 
   // select all posts
   const { posts } = useSelector((state) => state.allPosts);
@@ -26,7 +23,7 @@ function Home() {
     dispatch(getAllPosts(page));
     // get trending posts
     dispatch(getAllTrendingPosts());
-  }, [dispatch]);
+  }, [dispatch, page]);
 
   // show More Function
   const showMore = () => {
@@ -34,7 +31,7 @@ function Home() {
     // get recent posts
     dispatch(getAllPosts(page));
   };
-
+  console.log("post", posts);
   return (
     <div className="App">
       <div className="max-w-full">

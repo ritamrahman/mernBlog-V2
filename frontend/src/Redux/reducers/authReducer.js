@@ -8,11 +8,12 @@ import {
 } from "../constants/auth";
 
 // user login
-export const authReducer = (state = { user: {} }, action) => {
+export const authReducer = (user = {}, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
     case LOAD_CURRENT_USER_REQUEST:
       return {
+        ...user,
         loading: true,
         isAuthenticated: false,
       };
@@ -20,7 +21,7 @@ export const authReducer = (state = { user: {} }, action) => {
     case LOGIN_SUCCESS:
     case LOAD_CURRENT_USER_SUCCESS:
       return {
-        // ...state,
+        ...user,
         loading: false,
         isAuthenticated: true,
         user: action.payload,
@@ -28,7 +29,7 @@ export const authReducer = (state = { user: {} }, action) => {
 
     case LOGIN_FAIL:
       return {
-        ...state,
+        ...user,
         loading: false,
         isAuthenticated: false,
         user: null,
@@ -43,6 +44,6 @@ export const authReducer = (state = { user: {} }, action) => {
         error: action.payload,
       };
     default:
-      return state;
+      return user;
   }
 };

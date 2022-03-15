@@ -9,7 +9,6 @@ import Login from "../Auth/Login";
 
 // toggle btn functon
 const myFun = () => {
-  const toggleBtn = document.querySelector(".sidebar-toggle");
   const closeBtn = document.querySelector(".close-btn");
   const sidebar = document.querySelector(".sidebar");
 
@@ -22,7 +21,7 @@ const myFun = () => {
 };
 
 function Nav() {
-  const { user, loading, isAuthenticated, error } = useSelector((state) => state.auth);
+  const { user, loading, isAuthenticated } = useSelector((state) => state.auth);
 
   const [pathName, setPathName] = useState("");
 

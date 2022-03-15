@@ -48,10 +48,11 @@ const postSchema = new mongoose.Schema(
       // required: true,
       autopopulate: { select: "name -_id" },
     },
-    likes: {
-      type: Array,
-      default: [],
-    },
+    likes: [
+      {
+        type: String,
+      },
+    ],
 
     comments: [
       {

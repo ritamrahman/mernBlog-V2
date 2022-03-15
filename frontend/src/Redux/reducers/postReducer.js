@@ -11,9 +11,7 @@ import {
   LIKE_REQUEST,
   LIKE_SUCCESS,
   LIKE_FAIL,
-  UNLIKE_REQUEST,
-  UNLIKE_SUCCESS,
-  UNLIKE_FAIL,
+  RESET_REACTION,
 } from "../constants/postConstant";
 
 // Get all Recent post
@@ -69,55 +67,77 @@ export const trendingPostsReducer = (state = { trendingPosts: [] }, action) => {
 };
 
 // Get single post
-export const getSinglePostReducer = (state = { postDetails: {} }, action) => {
+export const getSinglePostReducer = (postDetails = {}, action) => {
   switch (action.type) {
     case POST_DETAILS_REQUEST:
       return {
-        ...state,
+        ...postDetails,
+        loading: false,
+      };
+
+    case LIKE_REQUEST:
+      return {
+        ...postDetails,
         loading: true,
-        postDetails: {},
+        reaction: "",
       };
 
     case POST_DETAILS_SUCCESS:
       return {
+        ...postDetails,
         loading: false,
         postDetails: action.payload,
       };
 
-    case POST_DETAILS_FAIL:
+    case LIKE_SUCCESS:
       return {
+        ...postDetails,
+        loading: false,
+        reaction: action.payload,
+      };
+
+    case RESET_REACTION:
+      return {
+        ...postDetails,
+        loading: false,
+        reaction: "",
+      };
+
+    case POST_DETAILS_FAIL:
+    case LIKE_FAIL:
+      return {
+        ...postDetails,
         loading: false,
         error: action.payload,
       };
 
     default:
-      return state;
+      return postDetails;
   }
 };
 
 // Like/Unlike post
-export const likeUnlikePostReducer = (state = { like: null }, action) => {
-  switch (action.type) {
-    case LIKE_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        like: null,
-      };
+// export const likeUnlikePostReducer = (state = { postDetails: {} }, action) => {
+//   switch (action.type) {
+//     case LIKE_REQUEST:
+//       return {
+//         ...state,
+//       };
 
-    case LIKE_SUCCESS:
-      return {
-        loading: false,
-        like: action.payload,
-      };
+//     case LIKE_SUCCESS:
+//       return {
+//         loading: false,
+//         postDetails: action.payload,
+//       };
 
-    case LIKE_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
+//     case LIKE_FAIL:
+//       return {
+//         ...state,
+//         loading: false,
+//         error: action.payload,
+//       };
 
-    default:
-      return state;
-  }
-};
+//     default:
+//       return state;
+//   }
+// };

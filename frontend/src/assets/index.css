@@ -289,6 +289,17 @@ post_stat>p{
 .postDetails_LeftSide>p{
   margin-bottom: 50px !important;
 }
+
+.pointerEvent{
+  display: none !important;
+}
+
+.likeBTN {
+    border: none;
+    background: transparent;
+}
+
+
 .postDetails_RightSide{
   border-radius: 5px;
   background-color: #f0fbffea;

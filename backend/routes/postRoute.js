@@ -26,6 +26,7 @@ const {
   getUserSinglePost,
   updateUsersPost,
   deleteUserPost,
+  deleteAllPosts,
 } = require("../controllers/postController");
 
 // define all routes
@@ -54,5 +55,8 @@ router
   .get(isAuthenticatedUser, checkPermissions("post_read_all"), getUserSinglePost)
   .put(isAuthenticatedUser, checkPermissions("post_update_all"), updateUsersPost)
   .delete(isAuthenticatedUser, checkPermissions("post_delete_all"), deleteUserPost);
+
+// Delete all Posts and comments
+router.route("/admin/posts/deleteall").delete(isAuthenticatedUser, checkPermissions("post_delete_all"), deleteAllPosts);
 
 module.exports = router;

@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   toast.configure();
   const dispatch = useDispatch();
-  const { loading, isAuthenticated, error } = useSelector((state) => state.auth);
+  const { isAuthenticated, error } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
