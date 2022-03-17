@@ -15,12 +15,12 @@ function Home() {
   const [page, setPage] = useState(1);
 
   // select all posts
-  const { posts } = useSelector((state) => state.allPosts);
+  const { posts, totalPosts } = useSelector((state) => state.allPosts);
   const { trendingPosts } = useSelector((state) => state.allTrendingPosts);
 
   useEffect(() => {
     // get recent posts
-    dispatch(getAllPosts(page));
+    posts.length !== totalPosts && dispatch(getAllPosts(page));
     // get trending posts
     dispatch(getAllTrendingPosts());
   }, [dispatch, page]);
@@ -28,10 +28,10 @@ function Home() {
   // show More Function
   const showMore = () => {
     setPage(page + 1);
-    // get recent posts
-    dispatch(getAllPosts(page));
   };
-  console.log("post", posts);
+  // console.log("post", posts);
+  // console.log("posts.length", posts.length);
+  // console.log("post", totalPosts);
   return (
     <div className="App">
       <div className="max-w-full">
@@ -96,12 +96,14 @@ function Home() {
               )}
             </div>
             <div className="d-flex justify-content-center my-3">
-              {posts.length > 0 ? (
+              {posts.length !== totalPosts ? (
                 <button type="button" id="signUp" className="c_btn" onClick={showMore}>
                   Show More
                 </button>
               ) : (
-                ""
+                <span>
+                  No more posts <br /> please refresh to fetch new posts{" "}
+                </span>
               )}
             </div>
           </div>

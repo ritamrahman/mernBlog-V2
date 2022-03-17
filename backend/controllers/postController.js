@@ -126,6 +126,11 @@ exports.newPost = catchAsyncErrors(async (req, res, next) => {
   // update category post number
   const category = await Category.findOne({ name: newPost.categories });
   // console.log(category);
+
+  if (!category) {
+    return next(new ErrorHandler("Category not found!", 404));
+  }
+
   await category.updateOne({ $inc: { totalPosts: 1 } });
   const user = await User.findById(req.user.id);
 

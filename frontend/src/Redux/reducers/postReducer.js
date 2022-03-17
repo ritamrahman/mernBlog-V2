@@ -12,6 +12,9 @@ import {
   LIKE_SUCCESS,
   LIKE_FAIL,
   RESET_REACTION,
+  AUTHOR_POPULAR_POSTS_REQUEST,
+  AUTHOR_POPULAR_POSTS_SUCCESS,
+  AUTHOR_POPULAR_POSTS_FAIL,
   RELATED_POSTS_REQUEST,
   RELATED_POSTS_SUCCESS,
   RELATED_POSTS_FAIL,
@@ -20,6 +23,7 @@ import {
 const initialState = {
   postDetails: {},
   relatedPosts: [],
+  authorPopularPosts: [],
 };
 
 // Get all Recent post
@@ -27,18 +31,20 @@ export const postReducer = (state = { posts: [] }, action) => {
   switch (action.type) {
     case ALL_POSTS_REQUEST:
       return {
+        ...state,
         loading: true,
-        posts: [],
       };
 
     case ALL_POSTS_SUCCESS:
       return {
         loading: false,
-        posts: action.payload.posts,
+        totalPosts: action.payload.postsCount,
+        posts: [...state.posts, ...action.payload.posts],
       };
 
     case ALL_POSTS_FAIL:
       return {
+        ...state,
         loading: false,
         error: action.payload,
       };
@@ -79,6 +85,7 @@ export const getSinglePostReducer = (state = initialState, action) => {
   switch (action.type) {
     case POST_DETAILS_REQUEST:
     case RELATED_POSTS_REQUEST:
+    case AUTHOR_POPULAR_POSTS_REQUEST:
       return {
         ...state,
         loading: false,
@@ -105,6 +112,13 @@ export const getSinglePostReducer = (state = initialState, action) => {
         relatedPosts: action.payload,
       };
 
+    case AUTHOR_POPULAR_POSTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        authorPopularPosts: action.payload,
+      };
+
     case LIKE_SUCCESS:
       return {
         ...state,
@@ -121,6 +135,7 @@ export const getSinglePostReducer = (state = initialState, action) => {
 
     case POST_DETAILS_FAIL:
     case RELATED_POSTS_FAIL:
+    case AUTHOR_POPULAR_POSTS_FAIL:
     case LIKE_FAIL:
       return {
         ...state,
@@ -132,29 +147,3 @@ export const getSinglePostReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-// Like/Unlike post
-// export const likeUnlikePostReducer = (state = { postDetails: {} }, action) => {
-//   switch (action.type) {
-//     case LIKE_REQUEST:
-//       return {
-//         ...state,
-//       };
-
-//     case LIKE_SUCCESS:
-//       return {
-//         loading: false,
-//         postDetails: action.payload,
-//       };
-
-//     case LIKE_FAIL:
-//       return {
-//         ...state,
-//         loading: false,
-//         error: action.payload,
-//       };
-
-//     default:
-//       return state;
-//   }
-// };

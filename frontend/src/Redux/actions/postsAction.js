@@ -88,7 +88,24 @@ export const likeUnlikePost = (id) => async (dispatch) => {
   }
 };
 
-// Get related post
+// Get author popular posts
+// export const getAuthorPopularPosts = (id) => async (dispatch) => {
+//   try {
+//     dispatch({ type: RELATED_POSTS_REQUEST });
+
+//     const { data } = await axios.get(`/api/post/${id}/related`);
+//     console.log("first", data);
+
+//     dispatch({ type: RELATED_POSTS_SUCCESS, payload: data.relatedPosts });
+//   } catch (error) {
+//     dispatch({
+//       type: RELATED_POSTS_FAIL,
+//       payload: error.response.data.errMessage,
+//     });
+//   }
+// };
+
+// Get related posts
 export const getRelatedPosts = (id) => async (dispatch) => {
   try {
     dispatch({ type: RELATED_POSTS_REQUEST });
