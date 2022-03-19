@@ -54,7 +54,7 @@ exports.getRelatedPosts = catchAsyncErrors(async (req, res, next) => {
 
   const ctgName = post.categories;
 
-  const relatedPosts = await Post.find({ categories: ctgName, status: "Approved" }).limit(5);
+  const relatedPosts = await Post.find({ categories: ctgName, status: "Approved" }).limit(3);
 
   // ==> This author popular posts on views
   // get post user name

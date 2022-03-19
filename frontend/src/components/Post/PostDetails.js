@@ -13,7 +13,7 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
 import { getSinglePost, likeUnlikePost, getRelatedPosts } from "../../Redux/actions/postsAction";
-import { RESET_REACTION } from "../../Redux/constants/postConstant";
+import { RESET_REACTION, ALL_POSTS_CLEAR } from "../../Redux/constants/postConstant";
 
 function PostDetails({ match }) {
   toast.configure();
@@ -24,10 +24,11 @@ function PostDetails({ match }) {
   const { loading, postDetails, reaction, relatedPosts } = useSelector((state) => state.singlePost);
 
   useEffect(() => {
-    dispatch(getSinglePost(match.params.id));
-    dispatch(getRelatedPosts(match.params.id));
+    dispatch(getSinglePost(match.params.id)); // get single post
+    dispatch(getRelatedPosts(match.params.id)); // get related post
     reaction !== "" && toast.success(reaction);
     dispatch({ type: RESET_REACTION });
+    dispatch({ type: ALL_POSTS_CLEAR }); //clear recent posts array []
   }, [dispatch, match.params.id, reaction]);
 
   // console.log("getSinglePost", postDetails);
@@ -102,14 +103,10 @@ function PostDetails({ match }) {
             </div>
           </div>
         </div>
-        <h2 className="py-1">You may like also</h2>
-        {/* {relatedPosts.map((p) => {
-          // return <h1>{p.title}</h1>;
-        })} */}
 
         {/* releted posts */}
-        <h2 className="py-1">You may like also</h2>
         <div className="container">
+          <h2 className="py-5">You may like also</h2>
           <div className="row py-5">
             {relatedPosts.length > 0 ? (
               relatedPosts.map((post) => (

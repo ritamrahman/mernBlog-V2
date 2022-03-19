@@ -2,6 +2,7 @@ import {
   ALL_POSTS_REQUEST,
   ALL_POSTS_SUCCESS,
   ALL_POSTS_FAIL,
+  ALL_POSTS_CLEAR,
   ALL_Trending_POSTS_REQUEST,
   ALL_Trending_POSTS_SUCCESS,
   ALL_Trending_POSTS_FAIL,
@@ -42,6 +43,11 @@ export const postReducer = (state = { posts: [] }, action) => {
         posts: [...state.posts, ...action.payload.posts],
       };
 
+    case ALL_POSTS_CLEAR:
+      return {
+        loading: false,
+        posts: [],
+      };
     case ALL_POSTS_FAIL:
       return {
         ...state,
