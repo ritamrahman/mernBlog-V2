@@ -2,30 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../Redux/actions/authAction";
+import { RESET_ERROR } from "../../Redux/constants/postConstant";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const Login = () => {
   toast.configure();
   const dispatch = useDispatch();
-  const { isAuthenticated, error } = useSelector((state) => state.auth);
+  const { user, loading, isAuthenticated, message, error } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      toast.success("successful");
-    }
-
-    if (error) {
-      toast.warning(error);
-    }
-  }, [isAuthenticated, error]);
-
   const submitHandler = (e) => {
     e.preventDefault();
-
     dispatch(userLogin(email, password));
   };
 

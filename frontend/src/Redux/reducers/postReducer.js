@@ -19,6 +19,7 @@ import {
   RELATED_POSTS_REQUEST,
   RELATED_POSTS_SUCCESS,
   RELATED_POSTS_FAIL,
+  RESET_ERROR,
 } from "../constants/postConstant";
 
 const initialState = {
@@ -147,6 +148,13 @@ export const getSinglePostReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case RESET_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: "",
       };
 
     default:

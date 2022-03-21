@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
 
 import AuthorPopularCard from "../Card/AuthorPopularCard";
 import RecentPost_Card from "../Card/RecentPost_Card";
@@ -13,7 +13,7 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
 import { getSinglePost, likeUnlikePost, getRelatedPosts } from "../../Redux/actions/postsAction";
-import { RESET_REACTION, ALL_POSTS_CLEAR } from "../../Redux/constants/postConstant";
+import { RESET_REACTION, ALL_POSTS_CLEAR, RESET_ERROR } from "../../Redux/constants/postConstant";
 
 function PostDetails({ match }) {
   toast.configure();
@@ -21,15 +21,17 @@ function PostDetails({ match }) {
 
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const { loading, postDetails, reaction, relatedPosts } = useSelector((state) => state.singlePost);
+  const { loading, postDetails, reaction, relatedPosts, error } = useSelector((state) => state.singlePost);
 
   useEffect(() => {
     dispatch(getSinglePost(match.params.id)); // get single post
     dispatch(getRelatedPosts(match.params.id)); // get related post
     reaction !== "" && toast.success(reaction);
+    error !== "" && toast.warning(error);
     dispatch({ type: RESET_REACTION });
     dispatch({ type: ALL_POSTS_CLEAR }); //clear recent posts array []
-  }, [dispatch, match.params.id, reaction]);
+    dispatch({ type: RESET_ERROR }); //clear recent posts array []
+  }, [dispatch, match.params.id, reaction, error]);
 
   // console.log("getSinglePost", postDetails);
 

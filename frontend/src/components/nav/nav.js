@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { Link } from "react-router-dom";
 import Login from "../Auth/Login";
+import { userLogout } from "../../Redux/actions/authAction";
 
 // toggle btn functon
 const myFun = () => {
   const closeBtn = document.querySelector(".close-btn");
   const sidebar = document.querySelector(".sidebar");
+
+  toast.configure();
 
   //using toggle
   sidebar.classList.toggle("show-sidebar");
@@ -21,17 +27,22 @@ const myFun = () => {
 };
 
 function Nav() {
-  const { user, loading, isAuthenticated } = useSelector((state) => state.auth);
-
-  const [pathName, setPathName] = useState("");
+  const dispatch = useDispatch();
+  const { user, loading, isAuthenticated, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      // toast.success("successful");
-      // document.getElementById("exampleModal").setAttribute("data-bs-dismiss", "modal");
-      document.getElementById("exampleModal").removeAttribute("class", "show");
-    }
-  }, []);
+    // if (isAuthenticated) {
+    //   // document.getElementById("exampleModal").removeAttribute("class", "show");
+
+    // }
+    isAuthenticated && toast.success("login success");
+  }, [isAuthenticated]);
+
+  // logout Handler
+  const logoutHandler = () => {
+    dispatch(userLogout());
+    toast.success("logout success");
+  };
 
   return (
     <div>
@@ -93,7 +104,7 @@ function Nav() {
                             </Link>
                           </li>
                           <li>
-                            <Link className="dropdown-item" to="#">
+                            <Link className="dropdown-item" to="#" onClick={logoutHandler}>
                               Logout
                             </Link>
                           </li>

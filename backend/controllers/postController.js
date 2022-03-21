@@ -232,6 +232,10 @@ exports.likePost = catchAsyncErrors(async (req, res, next) => {
 
   const logUser = await req.user.id.toString();
 
+  if (!logUser) {
+    return next(new ErrorHandler("Please log in first", 401));
+  }
+
   if (!post.likes.includes(logUser)) {
     // and adding LogUser id in likes array
     await post.updateOne({ $push: { likes: logUser } });
