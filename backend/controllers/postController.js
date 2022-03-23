@@ -48,20 +48,26 @@ exports.getSinglePost = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get related posts => /api/post/:id/related (on category)
+// Get related&Current author popular posts posts => /api/post/:id/related (on category)
 exports.getRelatedPosts = catchAsyncErrors(async (req, res, next) => {
-  const post = await Post.findById(req.params.id, {}, { autopopulate: false });
+  let post = await Post.findById(req.params.id, {}, { autopopulate: false }); //get current post
 
-  const ctgName = post.categories;
+  const ctgName = post.categories; //get current post ctg
 
-  const relatedPosts = await Post.find({ categories: ctgName, status: "Approved" }).limit(3);
+  const posts = await Post.find({ categories: ctgName, status: "Approved" }).limit(3);
+
+  // exclude current post from the related posts array
+  const relatedPosts = posts.filter((post) => post._id != req.params.id);
 
   // ==> This author popular posts on views
   // get post user name
   const author = await post.user.toString();
 
   // find post by user id
-  const authorPost = await Post.find({ user: author, status: "Approved" }).sort({ postViews: -1 }).limit(5);
+  let authorPost = await Post.find({ user: author, status: "Approved" }).sort({ postViews: -1 }).limit(3);
+
+  // exclude current post from the related posts array
+  authorPost = authorPost.filter((post) => post._id != req.params.id);
 
   res.status(200).json({
     success: true,
