@@ -48,7 +48,23 @@ exports.getSinglePost = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get related&Current author popular posts posts => /api/post/:id/related (on category)
+// Get posts by category => /api/post/:category
+exports.getPostsByCategory = catchAsyncErrors(async (req, res, next) => {
+  let post = await Post.find({ categories: req.params.category, status: "Approved" }).populate("user", "name -_id");
+
+  if (!post) {
+    return next(new ErrorHandler("no post found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    // likesCount: post.likes.length,
+    postsCount: post.length,
+    post,
+  });
+});
+
+// Get related & Current author popular posts posts => /api/post/:id/related (on category)
 exports.getRelatedPosts = catchAsyncErrors(async (req, res, next) => {
   let post = await Post.findById(req.params.id, {}, { autopopulate: false }); //get current post
 
@@ -115,6 +131,25 @@ exports.getRecentPosts = catchAsyncErrors(async (req, res, next) => {
 // Create new post => /api/post/create
 exports.newPost = catchAsyncErrors(async (req, res, next) => {
   let data = req.body;
+  let images = [];
+
+  if (typeof req.body.images === "string") {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
+  let imagesLinks = [];
+
+  const result = await cloudinary.v2.uploader.upload(images[i], {
+    folder: "postsImgs",
+  });
+
+  imagesLinks.push({
+    public_id: result.public_id,
+    url: result.secure_url,
+  });
+
+  req.body.images = imagesLinks;
 
   // get login user id from cookie and set to user
   data.user = req.user.id;
@@ -234,9 +269,9 @@ exports.getMyAllPosts = catchAsyncErrors(async (req, res, next) => {
 
 // Like/Unlike post => /api/post/:id/like
 exports.likePost = catchAsyncErrors(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.findById(req.params.id); //get current post
 
-  const logUser = await req.user.id.toString();
+  const logUser = await req.user.id.toString(); //get login use _id
 
   if (!logUser) {
     return next(new ErrorHandler("Please log in first", 401));
@@ -251,17 +286,16 @@ exports.likePost = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "like added successfully",
-      post,
     });
   } else {
-    // if not include LogUser id then increase likesCount by +1
+    // if include LogUser id then decrease likesCount by -1
     await post.updateOne({ $inc: { likesCount: -1 } });
+    // await post.updateOne([post.likes != 0 && { likesCount: -1 }]);
     // and adding LogUser id in likes array
     await post.updateOne({ $pull: { likes: logUser } });
     res.status(200).json({
       success: true,
       message: "like removed successfully",
-      post,
     });
   }
 });

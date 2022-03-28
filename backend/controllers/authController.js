@@ -2,18 +2,29 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const catchAsyncErrors = require("../middlewares/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
+const cloudinary = require("cloudinary").v2;
 
 const sendToken = require("../middlewares/jwtToken");
 
 // Register user => api/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  // console.log(req.formData);
+  const result = await cloudinary.uploader.upload(req.body.avatar, {
+    folder: "blogUsersAvatar",
+  });
+
   const { name, email, password } = req.body;
 
   // Encrypting password
   const salt = await bcrypt.genSalt(10);
   const hashedPass = await bcrypt.hash(password, salt);
 
-  const user = await User.create({ name, email, password: hashedPass });
+  const user = await User.create({
+    name,
+    email,
+    password: hashedPass,
+    avatar: { public_id: result.public_id, url: result.secure_url },
+  });
 
   sendToken(user, 200, res);
 });

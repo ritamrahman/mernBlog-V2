@@ -27,36 +27,38 @@ const {
   updateUsersPost,
   deleteUserPost,
   deleteAllPosts,
+  getPostsByCategory,
 } = require("../controllers/postController");
 
 // define all routes
 
 // PUBLIC ROUTES
-router.route("/posts").get(displayAllPosts);
-router.route("/posts/trending").get(getTrendingPosts);
-router.route("/posts/featured").get(getFeaturedPosts);
-router.route("/posts/recent").get(getRecentPosts);
-router.route("/post/:id/related").get(getRelatedPosts);
+router.route("/posts").get(displayAllPosts); //get all Approved posts
+router.route("/posts/:category").get(getPostsByCategory); //Get posts by category
+router.route("/posts/trending").get(getTrendingPosts); //get trending posts
+router.route("/posts/featured").get(getFeaturedPosts); //get featured posts
+router.route("/posts/recent").get(getRecentPosts); //get all recent posts
+router.route("/post/:id/related").get(getRelatedPosts); //get all related posts
 
 // USER ROUTES
-router.route("/post/create").post(isAuthenticatedUser, autoApprovedIfHasPermission("post_update_all"), newPost);
-router.route("/me/posts").get(isAuthenticatedUser, getMyAllPosts);
+router.route("/post/create").post(isAuthenticatedUser, autoApprovedIfHasPermission("post_update_all"), newPost); //create new post
+router.route("/me/posts").get(isAuthenticatedUser, getMyAllPosts); //get my posts
 router
   .route("/post/:id")
-  .get(getSinglePost)
-  .put(isAuthenticatedUser, updatePost)
-  .delete(isAuthenticatedUser, deletePost);
-router.route("/post/:id/like").put(isAuthenticatedUser, likePost);
+  .get(getSinglePost) //get single post
+  .put(isAuthenticatedUser, updatePost) //update post
+  .delete(isAuthenticatedUser, deletePost); //delate post
+router.route("/post/:id/like").put(isAuthenticatedUser, likePost); //like&Unlike Post
 
 // ADMIN ROUTES
-router.route("/admin/posts").get(isAuthenticatedUser, checkPermissions("post_read_all"), getAllPosts);
+router.route("/admin/posts").get(isAuthenticatedUser, checkPermissions("post_read_all"), getAllPosts); //get all posts
 router
   .route("/admin/post/:id")
-  .get(isAuthenticatedUser, checkPermissions("post_read_all"), getUserSinglePost)
-  .put(isAuthenticatedUser, checkPermissions("post_update_all"), updateUsersPost)
-  .delete(isAuthenticatedUser, checkPermissions("post_delete_all"), deleteUserPost);
+  .get(isAuthenticatedUser, checkPermissions("post_read_all"), getUserSinglePost) //get user single post
+  .put(isAuthenticatedUser, checkPermissions("post_update_all"), updateUsersPost) //update users post
+  .delete(isAuthenticatedUser, checkPermissions("post_delete_all"), deleteUserPost); //delate users post
 
 // Delete all Posts and comments
-router.route("/admin/posts/deleteall").delete(isAuthenticatedUser, checkPermissions("post_delete_all"), deleteAllPosts);
+router.route("/admin/posts/deleteall").delete(isAuthenticatedUser, checkPermissions("post_delete_all"), deleteAllPosts); //Delete Database's all posts
 
 module.exports = router;

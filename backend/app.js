@@ -4,9 +4,14 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./middlewares/error");
 
+const fileUpload = require("express-fileupload");
+const bodyParser = require("body-parser");
+
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(fileUpload());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Import all routes
 const posts = require("./routes/postRoute");

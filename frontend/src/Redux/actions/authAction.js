@@ -10,6 +10,9 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
 } from "../constants/auth.js";
 
 // user login
@@ -65,6 +68,31 @@ export const userLogout = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOGOUT_FAIL,
+      payload: error.response.data.errMessage,
+    });
+  }
+};
+
+// Register user
+export const registerUser = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: REGISTER_REQUEST });
+
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+
+    const { data } = await axios.post("/api/register", userData, config);
+
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: data.userData,
+    });
+  } catch (error) {
+    dispatch({
+      type: REGISTER_FAIL,
       payload: error.response.data.errMessage,
     });
   }

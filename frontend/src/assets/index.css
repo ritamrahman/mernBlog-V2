@@ -319,3 +319,8 @@ post_stat>p{
 .btn-close{
   background: none !important
 }
+
+/* Sign up */
+.rounded-circle{
+  width: 50px
+}

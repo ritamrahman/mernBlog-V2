@@ -8,13 +8,17 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
   CLEAR_ERROR,
 } from "../constants/auth";
 
-// user login/logout/load Current User
+// user register/login/logout/loadCurrentUser
 export const authReducer = (user = {}, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
+    case REGISTER_REQUEST:
     case LOAD_CURRENT_USER_REQUEST:
     case LOGOUT_REQUEST:
       return {
@@ -34,6 +38,13 @@ export const authReducer = (user = {}, action) => {
         message: "Login Successful",
       };
 
+    case REGISTER_SUCCESS:
+      return {
+        loading: false,
+        isAuthenticated: true,
+        message: "Registration Successful",
+      };
+
     case LOGOUT_SUCCESS:
       return {
         loading: false,
@@ -50,6 +61,7 @@ export const authReducer = (user = {}, action) => {
 
     case LOGIN_FAIL:
     case LOGOUT_FAIL:
+    case REGISTER_FAIL:
       return {
         ...user,
         loading: false,

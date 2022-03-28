@@ -121,7 +121,9 @@ function Nav() {
                 {/* btn group start */}
                 <div className=" d-flex justify-content-center align-items-center pe-5">
                   <button type="button" id="signUp" className="c_btn">
-                    <Link className="text-decoration-none">Sing Up</Link>
+                    <Link to="/singup" className="text-decoration-none">
+                      Sing Up
+                    </Link>
                     {/* Sing Up */}
                   </button>
 
