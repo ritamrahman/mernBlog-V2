@@ -21,7 +21,6 @@ function Home() {
   useEffect(() => {
     // get recent posts
     posts.length !== totalPosts && dispatch(getAllPosts(page));
-    // posts.length > 0 ? dispatch({ type: ALL_POSTS_CLEAR }) : dispatch(getAllPosts(page));
 
     // get trending posts
     dispatch(getAllTrendingPosts());

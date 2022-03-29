@@ -6,14 +6,15 @@ import PostDetails from "./components/Post/PostDetails.js";
 import { loadCurrentUser } from "./Redux/actions/authAction.js";
 import store from "./Redux/store.js";
 import SingUp from "./components/Auth/Singup.js";
+import { getCategories } from "./Redux/actions/categoryAction.js";
 
 // load current user on page refresh
 
 function App() {
   useEffect(() => {
-    // console.log("dispatch");
-    store.dispatch(loadCurrentUser());
-    // console.log("dispatch end");
+    // on page load dispatch bellow actions
+    store.dispatch(loadCurrentUser()); //load currently loggedIn user
+    store.dispatch(getCategories()); // get all categories
   }, []);
 
   return (

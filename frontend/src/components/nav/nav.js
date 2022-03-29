@@ -29,6 +29,7 @@ const myFun = () => {
 function Nav() {
   const dispatch = useDispatch();
   const { user, loading, isAuthenticated, newUser, message } = useSelector((state) => state.auth);
+  const { categories } = useSelector((state) => state.allCategories);
 
   useEffect(() => {
     // if (isAuthenticated) {
@@ -177,9 +178,14 @@ function Nav() {
         </div>
         {/* <!-- links --> */}
         <ul className="links">
-          <li>
-            <Link to="#">Home</Link>
-          </li>
+          {categories &&
+            categories.map((category) => (
+              <>
+                <li>
+                  <Link to={`/posts/${category.slug}`}>{category.name}</Link>
+                </li>
+              </>
+            ))}
         </ul>
       </aside>
       {/* // menu end */}
