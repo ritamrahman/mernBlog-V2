@@ -61,7 +61,9 @@ function Nav() {
           {/* center start */}
           <div className="center d-flex justify-content-center w-50">
             <h1 className="m-0" style={{ color: "#0568EB" }}>
-              <Link to="/">LOGO</Link>
+              <Link to="/" className="nav-logo">
+                LOGO
+              </Link>
             </h1>
           </div>
           {/* center end */}

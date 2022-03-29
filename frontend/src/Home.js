@@ -109,35 +109,6 @@ function Home() {
               )}
             </div>
           </div>
-          {/* <div className="w-100 ">
-            <div class="container ">
-              <div class="row d-flex">
-                {posts.map((post) => {
-                  return (
-                    <div class="col d-flex justify-content-start flex-wrap py-3">
-                      <RecentPost_Card
-                        link={post._id}
-                        title={post.title}
-                        authorName={post.user.name}
-                        description={post.description}
-                        views={post.postViews}
-                        likes={post.likes}
-                        commentCount={post.commentCount}
-                        categories={post.categories}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="d-flex justify-content-center my-3">
-              <button type="button" id="signUp" className="c_btn">
-                <a className="text-decoration-none" href="#">
-                  Show More
-                </a>
-              </button>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

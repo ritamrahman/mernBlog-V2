@@ -5,7 +5,9 @@
 }
 
 /* ==>NAV */
-
+.nav-logo{
+  text-decoration: none;
+}
 
 /* Side nav start*/
 /* Hamburger Toggle Button */
@@ -24,6 +26,10 @@
   color: hsl(205, 90%, 76%);
 }
 /* Sidebar Nav */
+.sidebar {
+    z-index: 999;
+}
+
 .sidebar-header {
   display: flex;
   justify-content: space-between;
@@ -181,11 +187,12 @@ margin: 0 5px;
 }
 
 .hero_txt_div>h4{
-    font-size: 60px;
+    font-size: 42px;
     color: #434343;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-ser;
 }
 .hero_txt_div>h1{
+    margin: 20px 0 60px 0;
     font-size: 70px;
     color: #2F88FF;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-ser;
