@@ -22,19 +22,23 @@ const SingUp = ({ history }) => {
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("/images/default_avatar.jpg");
 
-  const { isAuthenticated, error, loading } = useSelector((state) => state.auth);
+  const { isAuthenticated, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push("/");
-      dispatch({ type: LOAD_CURRENT_USER_REQUEST });
+      isAuthenticated && toast.success("Registration successful");
+
+      setTimeout(() => {
+        history.push("/");
+        window.location.reload(false);
+      }, 2000);
     }
 
     if (error) {
       alert.error(error);
       history.push("/singup");
     }
-  }, [dispatch, isAuthenticated, error, history]);
+  }, [dispatch, isAuthenticated, error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +47,12 @@ const SingUp = ({ history }) => {
     formData.set("name", name);
     formData.set("email", email);
     formData.set("password", password);
-    formData.set("avatar", avatar);
+    formData.set(
+      "avatar",
+      avatar
+        ? avatar
+        : "https://res.cloudinary.com/dj2yaang5/image/upload/v1648561981/blogUsersAvatar/pq8wqw7z9etx6vs0w4lw.jpg"
+    );
 
     dispatch(registerUser(formData));
   };

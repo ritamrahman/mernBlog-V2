@@ -28,14 +28,14 @@ const myFun = () => {
 
 function Nav() {
   const dispatch = useDispatch();
-  const { user, loading, isAuthenticated, message } = useSelector((state) => state.auth);
+  const { user, loading, isAuthenticated, newUser, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
     // if (isAuthenticated) {
     //   // document.getElementById("exampleModal").removeAttribute("class", "show");
 
     // }
-    isAuthenticated && toast.success("login success");
+    !newUser && isAuthenticated && toast.success("login success");
   }, [isAuthenticated]);
 
   // logout Handler

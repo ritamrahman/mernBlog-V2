@@ -41,6 +41,7 @@ export const authReducer = (user = {}, action) => {
     case REGISTER_SUCCESS:
       return {
         loading: false,
+        newUser: true,
         isAuthenticated: true,
         message: "Registration Successful",
       };
