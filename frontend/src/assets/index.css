@@ -318,7 +318,6 @@ post_stat>p{
 }
 .reletedPost>h2{
   color: #434343;
-
 }
 
 
@@ -330,4 +329,9 @@ post_stat>p{
 /* Sign up */
 .rounded-circle{
   width: 50px
+}
+
+/* showMoreBtnHide */
+.showMoreBtnHide{
+  display: none !important
 }

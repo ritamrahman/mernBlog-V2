@@ -3,6 +3,9 @@ import {
   ALL_POSTS_SUCCESS,
   ALL_POSTS_FAIL,
   ALL_POSTS_CLEAR,
+  GET_POSTS_BY_CATEGORY_REQUEST,
+  GET_POSTS_BY_CATEGORY_SUCCESS,
+  GET_POSTS_BY_CATEGORY_FAIL,
   ALL_Trending_POSTS_REQUEST,
   ALL_Trending_POSTS_SUCCESS,
   ALL_Trending_POSTS_FAIL,
@@ -32,12 +35,14 @@ const initialState = {
 export const postReducer = (state = { posts: [] }, action) => {
   switch (action.type) {
     case ALL_POSTS_REQUEST:
+    case GET_POSTS_BY_CATEGORY_REQUEST:
       return {
         ...state,
         loading: true,
       };
 
     case ALL_POSTS_SUCCESS:
+    case GET_POSTS_BY_CATEGORY_SUCCESS:
       return {
         loading: false,
         totalPosts: action.payload.postsCount,
@@ -50,6 +55,7 @@ export const postReducer = (state = { posts: [] }, action) => {
         posts: [],
       };
     case ALL_POSTS_FAIL:
+    case GET_POSTS_BY_CATEGORY_FAIL:
       return {
         ...state,
         loading: false,

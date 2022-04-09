@@ -3,14 +3,14 @@ import { GET_CATEGORIES_FAIL, GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS } f
 export const getCategories = (categories = [], action) => {
   switch (action.type) {
     case GET_CATEGORIES_REQUEST:
-      console.log("first");
+      // console.log("first");
       return {
         loading: true,
         categories: [],
       };
 
     case GET_CATEGORIES_SUCCESS:
-      console.log("2nd");
+      // console.log("2nd");
       return {
         loading: false,
         categories: action.payload,

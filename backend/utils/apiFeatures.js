@@ -1,7 +1,7 @@
 class ApiFeatures {
   constructor(query, queryStr) {
-    this.query = query;
-    this.queryStr = queryStr;
+    this.query = query; //Post.find()
+    this.queryStr = queryStr; //$sec=abc
   }
 
   search() {
@@ -13,23 +13,28 @@ class ApiFeatures {
           },
         }
       : {};
+    //   Removing fields from query
+    // const removeFields = ["category"];
+    // removeFields.forEach((el) => delete this.queryStr[el]);
 
     this.query = this.query.find({ ...keyword });
+
     return this;
   }
-
   filter() {
-    const queryCopy = { ...this.queryStr };
-
+    const categories = this.queryStr.category
+      ? {
+          categories: {
+            $regex: this.queryStr.category,
+            $options: "i",
+          },
+        }
+      : {};
     //   Removing fields from query
-    const removeFields = ["keyword", "limit", "page"];
-    removeFields.forEach((el) => delete queryCopy[el]);
+    const removeFields = ["keyword"];
+    removeFields.forEach((el) => delete this.queryStr[el]);
+    this.query = this.query.find(categories);
 
-    // Advance filter for price, rating etc
-    let queryStr = JSON.stringify(queryCopy);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
-
-    this.query = this.query.find(JSON.parse(queryStr));
     return this;
   }
 

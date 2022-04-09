@@ -10,6 +10,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import Login from "../Auth/Login";
 import { userLogout } from "../../Redux/actions/authAction";
+import { getAllPosts } from "../../Redux/actions/postsAction";
+import { ALL_POSTS_CLEAR } from "../../Redux/constants/postConstant";
 
 // toggle btn functon
 const myFun = () => {
@@ -27,15 +29,13 @@ const myFun = () => {
 };
 
 function Nav() {
+  let page;
   const dispatch = useDispatch();
+
   const { user, loading, isAuthenticated, newUser, message } = useSelector((state) => state.auth);
   const { categories } = useSelector((state) => state.allCategories);
 
   useEffect(() => {
-    // if (isAuthenticated) {
-    //   // document.getElementById("exampleModal").removeAttribute("class", "show");
-
-    // }
     !newUser && isAuthenticated && toast.success("login success");
   }, [isAuthenticated]);
 
@@ -43,6 +43,12 @@ function Nav() {
   const logoutHandler = () => {
     dispatch(userLogout());
     toast.success("logout success");
+  };
+
+  // onclick menu handler
+  const handler = () => {
+    dispatch({ type: ALL_POSTS_CLEAR }); //clear recent posts array []
+    myFun();
   };
 
   return (
@@ -62,7 +68,7 @@ function Nav() {
           {/* center start */}
           <div className="center d-flex justify-content-center w-50">
             <h1 className="m-0" style={{ color: "#0568EB" }}>
-              <Link to="/" className="nav-logo">
+              <Link to="/" className="nav-logo" onClick={() => dispatch({ type: ALL_POSTS_CLEAR })}>
                 LOGO
               </Link>
             </h1>
@@ -182,7 +188,9 @@ function Nav() {
             categories.map((category) => (
               <>
                 <li>
-                  <Link to={`/posts/${category.slug}`}>{category.name}</Link>
+                  <Link to={`/posts/${category.slug}`} onClick={handler}>
+                    {category.name}
+                  </Link>
                 </li>
               </>
             ))}

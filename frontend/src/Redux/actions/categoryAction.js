@@ -4,7 +4,7 @@ import { GET_CATEGORIES_FAIL, GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS } f
 
 // get categories
 export const getCategories = () => async (dispatch) => {
-  console.log("ctDT");
+  // console.log("ctDT");
   try {
     dispatch({ type: GET_CATEGORIES_REQUEST });
 

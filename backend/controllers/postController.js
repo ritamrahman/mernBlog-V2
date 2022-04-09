@@ -10,7 +10,10 @@ const ErrorHandler = require("../utils/errorHandler");
 // ==> PUBLIC CONTROLLER
 // Get all posts => /api/posts
 exports.displayAllPosts = catchAsyncErrors(async (req, res, next) => {
+  // let posts = [];
+  // let query = {};
   const resPerPage = 10;
+
   const postsCount = await Post.countDocuments();
 
   const apiFeatures = new ApiFeatures(Post.find({ status: "Approved" }).sort({ updatedAt: -1 }), req.query)
@@ -23,7 +26,7 @@ exports.displayAllPosts = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     postsCount,
-    // resPerPage,
+    // // resPerPage,
     postFound: posts.length,
     posts,
   });
@@ -131,25 +134,6 @@ exports.getRecentPosts = catchAsyncErrors(async (req, res, next) => {
 // Create new post => /api/post/create
 exports.newPost = catchAsyncErrors(async (req, res, next) => {
   let data = req.body;
-  let images = [];
-
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
-  }
-  let imagesLinks = [];
-
-  const result = await cloudinary.v2.uploader.upload(images[i], {
-    folder: "postsImgs",
-  });
-
-  imagesLinks.push({
-    public_id: result.public_id,
-    url: result.secure_url,
-  });
-
-  req.body.images = imagesLinks;
 
   // get login user id from cookie and set to user
   data.user = req.user.id;

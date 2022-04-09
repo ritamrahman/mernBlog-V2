@@ -7,6 +7,7 @@ import { loadCurrentUser } from "./Redux/actions/authAction.js";
 import store from "./Redux/store.js";
 import SingUp from "./components/Auth/Singup.js";
 import { getCategories } from "./Redux/actions/categoryAction.js";
+import FilteredPosts from "./FilteredPosts";
 
 // load current user on page refresh
 
@@ -26,6 +27,7 @@ function App() {
           {/* post */}
           <Route path="/" component={Home} exact />
           <Route path="/post/:id" component={PostDetails} exact />
+          <Route path="/posts/:category" component={FilteredPosts} />
         </div>
       </Router>
     </>

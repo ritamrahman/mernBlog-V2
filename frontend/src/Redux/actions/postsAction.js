@@ -3,6 +3,9 @@ import {
   ALL_POSTS_REQUEST,
   ALL_POSTS_SUCCESS,
   ALL_POSTS_FAIL,
+  GET_POSTS_BY_CATEGORY_REQUEST,
+  GET_POSTS_BY_CATEGORY_SUCCESS,
+  GET_POSTS_BY_CATEGORY_FAIL,
   ALL_Trending_POSTS_REQUEST,
   ALL_Trending_POSTS_SUCCESS,
   ALL_Trending_POSTS_FAIL,
@@ -19,13 +22,16 @@ import {
 
 // Get all  recent posts
 export const getAllPosts =
-  (page = 1) =>
+  (page = 1, category = "", keyword = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_POSTS_REQUEST });
 
-      let link = `/api/posts?page=${page}`;
-
+      let link = `/api/posts?page=${page}&keyword=${keyword}`;
+      if (category) {
+        link = `/api/posts?page=${page}&category=${category}`;
+      }
+console.log("link", link);
       const { data } = await axios.get(link);
 
       dispatch({ type: ALL_POSTS_SUCCESS, payload: data });
@@ -48,6 +54,22 @@ export const getAllTrendingPosts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ALL_Trending_POSTS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Get posts by category
+export const getPostsByCategory = (categoryName) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_POSTS_BY_CATEGORY_REQUEST });
+
+    const { data } = await axios.get(`/api/posts/${categoryName}`);
+
+    dispatch({ type: GET_POSTS_BY_CATEGORY_SUCCESS, payload: data.post });
+  } catch (error) {
+    dispatch({
+      type: GET_POSTS_BY_CATEGORY_FAIL,
       payload: error.response.data.message,
     });
   }

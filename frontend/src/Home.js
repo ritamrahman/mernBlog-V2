@@ -8,6 +8,7 @@ import RecentPost_Card from "./components/Card/RecentPost_Card";
 import PostCard from "./components/Card/postCard";
 
 import { getAllPosts, getAllTrendingPosts } from "./Redux/actions/postsAction";
+import { useLocation, useParams } from "react-router-dom";
 
 function Home() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function Home() {
   // select all posts
   const { posts, totalPosts } = useSelector((state) => state.allPosts);
   const { trendingPosts } = useSelector((state) => state.allTrendingPosts);
+  const { categories } = useSelector((state) => state.allCategories);
 
   useEffect(() => {
     // get recent posts
@@ -30,9 +32,7 @@ function Home() {
   const showMore = () => {
     setPage(page + 1);
   };
-  // console.log("post", posts);
-  // console.log("posts.length", posts.length);
-  // console.log("post", totalPosts);
+
   return (
     <div className="App">
       <div className="max-w-full">
@@ -41,12 +41,13 @@ function Home() {
           <Hero />
           {/* Top category */}
           <h1 className="ct_txt w-100 text-center">Popular category</h1>
-          <div className="d-flex justify-content-evenly py-5">
-            <CTCard name="Tech" />
-            <CTCard name="Music" />
-            <CTCard name="Programming" />
-            <CTCard name="Blogging" />
-            <CTCard name="Story" />;
+          <div className="d-flex justify-content-evenly py-5 flex-wrap my-4">
+            {categories &&
+              categories.map((category) => (
+                <>
+                  <CTCard name={`${category.name}`} />
+                </>
+              ))}
           </div>
           {/* Trending Post */}
           <h1 className="ct_txt w-100 text-center pt-5">Trending Post</h1>
