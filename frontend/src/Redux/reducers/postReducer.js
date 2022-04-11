@@ -46,6 +46,7 @@ export const postReducer = (state = { posts: [] }, action) => {
       return {
         loading: false,
         totalPosts: action.payload.postsCount,
+        totalFoundPosts: action.payload.totalFoundPosts,
         posts: [...state.posts, ...action.payload.posts],
       };
 

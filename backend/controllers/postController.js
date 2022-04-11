@@ -23,11 +23,27 @@ exports.displayAllPosts = catchAsyncErrors(async (req, res, next) => {
 
   let posts = await apiFeatures.query;
 
+  let fountPosts;
+  let category = req.query.category;
+
+  // count all of this categorys posts save on DB
+  // const { category } = req.query; //get query
+  // console.log(req.query.category);
+
+  if (category) {
+    fountPosts = await Post.countDocuments({
+      categories: {
+        $regex: category,
+        $options: "i",
+      },
+    });
+  }
+
   res.status(200).json({
     success: true,
     postsCount,
-    // // resPerPage,
-    postFound: posts.length,
+    postFound: posts.length, //displayed posts
+    totalFoundPosts: fountPosts, // total found posts
     posts,
   });
 });
@@ -97,9 +113,10 @@ exports.getRelatedPosts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get trending posts => /api/posts/trending (on views)
+// Get trending posts => /api/trending (on like)
 exports.getTrendingPosts = catchAsyncErrors(async (req, res, next) => {
-  const post = await Post.find({ status: "Approved" }).sort({ postViews: -1 }).limit(3);
+  console.log("post");
+  const post = await Post.find({ status: "Approved" }).sort({ likesCount: -1 }).limit(3);
 
   res.status(200).json({
     success: true,

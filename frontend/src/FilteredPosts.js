@@ -14,7 +14,7 @@ const FilteredPosts = ({ match }) => {
   const [page, setPage] = useState(1);
 
   // select all posts
-  const { posts, totalPosts } = useSelector((state) => state.allPosts);
+  const { loading, posts, totalPosts, totalFoundPosts } = useSelector((state) => state.allPosts);
 
   // currentCtg = tech
   //prevCtg = music
@@ -39,26 +39,6 @@ const FilteredPosts = ({ match }) => {
     setIsBlocked(true);
   }, [dispatch, page]);
 
-  // const dilleadFun = () => {
-  //   console.log("before conditions");
-  //   console.log("currentCtg", currentCtg);
-  //   console.log("prevCtg", prevCtg);
-  //   if (currentCtg == prevCtg) {
-  //     console.log("if conditions");
-  //     console.log("currentCtg", currentCtg);
-  //     console.log("prevCtg", prevCtg);
-
-  //     return posts.length !== totalPosts && dispatch(getAllPosts(page, match.params.category));
-  //   } else {
-  //     console.log("else conditions");
-  //     setPage(1);
-  //     setPrevCtg(currentCtg);
-  //     posts.length !== totalPosts && dispatch(getAllPosts(page, match.params.category));
-  //     console.log("currentCtg", currentCtg);
-  //     console.log("prevCtg", prevCtg);
-  //   }
-  // };
-
   // show More Function
   const showMore = () => {
     setPage(page + 1);
@@ -71,7 +51,7 @@ const FilteredPosts = ({ match }) => {
           {/* <Nav /> */}
           <div className="container">
             {/* Recent Post */}
-            <span className="ct_txt w-100 text-left pt-5">posts found {posts.length}</span>
+            <span className="ct_txt w-100 text-left pt-5">posts found {totalFoundPosts}</span>
             <div className="container">
               <div className="row py-5">
                 {posts.length > 0 ? (
@@ -93,12 +73,17 @@ const FilteredPosts = ({ match }) => {
                   <h5>no post found</h5>
                 )}
               </div>
+
               <div className="d-flex justify-content-center my-3">
                 {posts.length !== totalPosts ? (
                   <button
                     type="button"
                     id="signUp"
-                    className={`c_btn ${posts.length < 10 ? "showMoreBtnHide" : ""}`}
+                    className={`c_btn ${
+                      (!loading && posts !== [] && posts.length !== totalFoundPosts) || posts.length < totalFoundPosts
+                        ? ""
+                        : "showMoreBtnHide"
+                    }`}
                     onClick={showMore}
                   >
                     Show More

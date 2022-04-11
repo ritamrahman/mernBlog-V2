@@ -35,7 +35,7 @@ const {
 // PUBLIC ROUTES
 router.route("/posts").get(displayAllPosts); //get all Approved posts
 router.route("/posts/:category").get(getPostsByCategory); //Get posts by category
-router.route("/posts/trending").get(getTrendingPosts); //get trending posts
+router.route("/trending").get(getTrendingPosts); //get trending posts
 router.route("/posts/featured").get(getFeaturedPosts); //get featured posts
 router.route("/posts/recent").get(getRecentPosts); //get all recent posts
 router.route("/post/:id/related").get(getRelatedPosts); //get all related posts

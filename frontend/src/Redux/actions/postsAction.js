@@ -31,10 +31,14 @@ export const getAllPosts =
       if (category) {
         link = `/api/posts?page=${page}&category=${category}`;
       }
-console.log("link", link);
+      console.log("link", link);
       const { data } = await axios.get(link);
 
-      dispatch({ type: ALL_POSTS_SUCCESS, payload: data });
+      console.log("data", data);
+      dispatch({
+        type: ALL_POSTS_SUCCESS,
+        payload: data,
+      });
     } catch (error) {
       dispatch({
         type: ALL_POSTS_FAIL,
@@ -48,7 +52,7 @@ export const getAllTrendingPosts = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_Trending_POSTS_REQUEST });
 
-    const { data } = await axios.get("/api/posts/trending");
+    const { data } = await axios.get("/api/trending");
 
     dispatch({ type: ALL_Trending_POSTS_SUCCESS, payload: data.post });
   } catch (error) {
