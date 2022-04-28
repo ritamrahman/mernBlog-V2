@@ -30,18 +30,16 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please write something here"],
     },
-    images: [
-      {
-        public_id: {
-          type: String,
-          required: true,
-        },
-        url: {
-          type: String,
-          required: true,
-        },
+    images: {
+      public_id: {
+        type: String,
+        required: true,
       },
-    ],
+      url: {
+        type: String,
+        required: true,
+      },
+    },
 
     user: {
       type: mongoose.Schema.ObjectId,

@@ -21,6 +21,15 @@ const user = require("./routes/userRoute");
 const category = require("./routes/categoryRoute");
 const comment = require("./routes/commentRoute");
 
+// solve cros issue
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Headers", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Methods", "Content-Type");
+  next();
+});
+
 app.use("/api", posts);
 app.use("/api", auth);
 app.use("/api", role);

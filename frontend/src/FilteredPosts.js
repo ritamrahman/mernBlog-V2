@@ -28,14 +28,15 @@ const FilteredPosts = ({ match }) => {
     if (isBlocked) {
       setPage(1);
       // get recent posts
-      posts.length !== totalPosts && dispatch(getAllPosts(page, match.params.category));
+      match.params.category && posts.length !== totalPosts && dispatch(getAllPosts(page, match.params.category));
+      match.params.keyword && posts.length !== totalPosts && dispatch(getAllPosts(page, "", match.params.keyword));
     }
     // setIsBlocked(false);
-  }, [match.params.category]);
+  }, [match.params.category, match.params.keyword]);
 
   useEffect(() => {
     // get recent posts
-    posts.length !== totalPosts && dispatch(getAllPosts(page, match.params.category));
+    posts.length !== totalPosts && dispatch(getAllPosts(page, match.params.category, match.params.keyword));
     setIsBlocked(true);
   }, [dispatch, page]);
 

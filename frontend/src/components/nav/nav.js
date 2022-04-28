@@ -83,7 +83,9 @@ function Nav() {
                 <div className=" d-flex justify-content-around align-items-center pe-5">
                   {/* create post btn */}
                   <button className="btn btn-outline-primary">
-                    <Link className="text-decoration-none">Create post</Link>
+                    <Link to="/createpost" className="text-decoration-none">
+                      Create post
+                    </Link>
                   </button>
 
                   {/* // Dropdown btn start */}

@@ -61,7 +61,7 @@ const SingUp = ({ history }) => {
   const onChange = (e) => {
     if (e.target.name === "avatar") {
       const reader = new FileReader();
-      console.log("reader", reader);
+      // console.log("reader", reader);
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);

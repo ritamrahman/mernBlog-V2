@@ -235,7 +235,9 @@ margin: 0 5px;
 }
 .postCard>img{
    border-radius: 15px !important;
-    box-shadow: 0px 2px 4px 1px rgb(0 0 0 / 37%) !important;
+  box-shadow: 0px 2px 4px 1px rgb(0 0 0 / 37%) !important;
+  max-height: 203px !important;
+  object-fit: cover;
             
 }
 .postCard>div>p{
@@ -273,6 +275,10 @@ post_stat>p{
     max-height: 450px ;
     /* margin: 0 10px 30px 10px; */
       box-shadow: 0px 0px 4px 0px #00000033, 0px 0px 5px 1px #00000033;
+}
+.recentPost_card>img{
+  object-fit: cover;
+    max-height: 204px;
 }
 .recentPost_card>div>p{
   max-height: 93px !important;

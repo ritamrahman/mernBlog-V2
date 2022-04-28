@@ -22,6 +22,9 @@ import {
   RELATED_POSTS_REQUEST,
   RELATED_POSTS_SUCCESS,
   RELATED_POSTS_FAIL,
+  CREATE_NEW_POST_REQUEST,
+  CREATE_NEW_POST_SUCCESS,
+  CREATE_NEW_POST_FAIL,
   RESET_ERROR,
 } from "../constants/postConstant";
 
@@ -166,5 +169,32 @@ export const getSinglePostReducer = (state = initialState, action) => {
 
     default:
       return state;
+  }
+};
+
+// Create new post
+export const createNewPostReducer = (post = {}, action) => {
+  switch (action.type) {
+    case CREATE_NEW_POST_REQUEST:
+      return {
+        loading: true,
+        post: "",
+      };
+
+    case CREATE_NEW_POST_SUCCESS:
+      return {
+        loading: false,
+        post: action.payload,
+      };
+
+    case CREATE_NEW_POST_FAIL:
+      return {
+        ...post,
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return post;
   }
 };

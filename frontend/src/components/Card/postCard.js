@@ -3,15 +3,22 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Status from "./Status";
 import { Link } from "react-router-dom";
 
-function postCard({ link, title, categories, authorName, avatar, description, views, likesCount, commentCount }) {
+function postCard({
+  images,
+  link,
+  title,
+  categories,
+  authorName,
+  avatar,
+  description,
+  views,
+  likesCount,
+  commentCount,
+}) {
   return (
     <>
       <div className="postCard card">
-        <img
-          src="https://assets.weforum.org/article/image/P-024s_6OEvTBP4g8SXT-eNv2yWuRkrEtCdS9rJQ-Bg.jpg"
-          className="card-img-top"
-          alt="..."
-        />
+        <img src={images} className="card-img-top" alt="..." />
 
         <div className="card-body">
           {/* title */}

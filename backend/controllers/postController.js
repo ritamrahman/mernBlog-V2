@@ -1,3 +1,5 @@
+const cloudinary = require("cloudinary").v2;
+
 const catchAsyncErrors = require("../middlewares/catchAsyncError");
 const Post = require("../models/post");
 const Comment = require("../models/comment");
@@ -150,10 +152,19 @@ exports.getRecentPosts = catchAsyncErrors(async (req, res, next) => {
 // ==> USER CONTROLLER
 // Create new post => /api/post/create
 exports.newPost = catchAsyncErrors(async (req, res, next) => {
-  let data = req.body;
+  let { images, ...data } = req.body;
+  console.log(data);
+  console.log("1");
+  // upload image on cloudinary
+  // console.log("images", images);
+  const imgResult = await cloudinary.uploader.upload(images, {
+    folder: "blogPostImages",
+  });
+  console.log("2");
 
   // get login user id from cookie and set to user
   data.user = req.user.id;
+  console.log("3");
 
   // check user role
   // ---if user role is admin then set post status Approved
@@ -161,9 +172,34 @@ exports.newPost = catchAsyncErrors(async (req, res, next) => {
     // req.body.status = "Approved";
     data.status = "Approved";
   }
+  console.log("4");
+
+  // const postInfo = {
+  //   title: data.title,
+  //   category: data.category,
+  //   description: data.description,
+  //   status: data.status,
+  //   user: data.user,
+  //   images: {
+  //     public_id: imgResult.public_id,
+  //     url: imgResult.secure_url,
+  //   },
+  // };
 
   // save post on db
-  const newPost = await Post.create(data);
+  console.log(data, imgResult);
+  const newPost = await Post.create({
+    title: data.title,
+    categories: data.category,
+    description: data.description,
+    status: data.status,
+    user: data.user,
+    images: {
+      public_id: imgResult.public_id,
+      url: imgResult.secure_url,
+    },
+  });
+  console.log("5");
 
   // update category post number
   const category = await Category.findOne({ name: newPost.categories });
@@ -173,7 +209,7 @@ exports.newPost = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Category not found!", 404));
   }
 
-  await category.updateOne({ $inc: { totalPosts: 1 } });
+  // await category.updateOne({ $inc: { totalPosts: 1 } });
   const user = await User.findById(req.user.id);
 
   await user.updateOne({ $push: { posts: newPost._id } });

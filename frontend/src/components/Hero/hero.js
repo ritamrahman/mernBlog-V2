@@ -1,4 +1,6 @@
 import React from "react";
+import { Route, Router } from "react-router-dom";
+import Search from "../Search";
 
 function hero() {
   return (
@@ -6,12 +8,7 @@ function hero() {
       <div className="hero_txt_div text-center w-100 d-flex flex-column align-items-center">
         <h4>"Learn Something New"</h4>
         <h1>Blog</h1>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-success" type="submit">
-            Search
-          </button>
-        </form>
+        <Route render={({ history }) => <Search history={history} />} />
       </div>
     </div>
   );

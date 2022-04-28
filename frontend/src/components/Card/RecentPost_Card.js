@@ -3,12 +3,25 @@ import { Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Status from "./Status";
 
-function RecentPost_Card({ link, title, categories, authorName, avatar, description, views, likes, commentCount }) {
+function RecentPost_Card({
+  link,
+  title,
+  categories,
+  authorName,
+  avatar,
+  description,
+  views,
+  likes,
+  commentCount,
+  images,
+  _id,
+}) {
   return (
     <>
       <div className="recentPost_card card">
         <img
-          src="https://assets.weforum.org/article/image/P-024s_6OEvTBP4g8SXT-eNv2yWuRkrEtCdS9rJQ-Bg.jpg"
+          // src="https://assets.weforum.org/article/image/P-024s_6OEvTBP4g8SXT-eNv2yWuRkrEtCdS9rJQ-Bg.jpg"
+          src={images}
           className="card-img-top"
           alt="..."
         />

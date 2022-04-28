@@ -1,4 +1,5 @@
 import axios from "axios";
+import { api } from "../api";
 import {
   ALL_POSTS_REQUEST,
   ALL_POSTS_SUCCESS,
@@ -18,6 +19,9 @@ import {
   RELATED_POSTS_REQUEST,
   RELATED_POSTS_SUCCESS,
   RELATED_POSTS_FAIL,
+  CREATE_NEW_POST_REQUEST,
+  CREATE_NEW_POST_SUCCESS,
+  CREATE_NEW_POST_FAIL,
 } from "../constants/postConstant";
 
 // Get all  recent posts
@@ -126,6 +130,31 @@ export const getRelatedPosts = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: RELATED_POSTS_FAIL,
+      payload: error.response.data.errMessage,
+    });
+  }
+};
+
+// Create new post
+export const createNewPost = (formData) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_NEW_POST_REQUEST });
+
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+
+    const { data } = await axios.post(`${api}/post/create`, formData, { withCredentials: true }, config);
+    console.log("data", data);
+    dispatch({
+      type: CREATE_NEW_POST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_NEW_POST_FAIL,
       payload: error.response.data.errMessage,
     });
   }

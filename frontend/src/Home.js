@@ -57,6 +57,7 @@ function Home() {
                 trendingPosts.map((post) => (
                   <div className="col-lg-4 col-md-6 col-sm-12">
                     <PostCard
+                      images={post.images.url}
                       link={post._id}
                       title={post.title}
                       authorName={post.user.name}
@@ -82,6 +83,7 @@ function Home() {
                 posts.map((post) => (
                   <div className="col-lg-4 col-md-6 col-sm-12 py-4">
                     <RecentPost_Card
+                      images={post.images.url}
                       link={post._id}
                       title={post.title}
                       authorName={post.user.name}
