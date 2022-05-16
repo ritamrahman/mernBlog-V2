@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadCurrentUser } from "../../Redux/actions/authAction";
-import { createNewPost } from "../../Redux/actions/postsAction";
-import { CREATE_NEW_POST_REQUEST } from "../../Redux/constants/postConstant";
+import { createNewPost, getAllPosts } from "../../Redux/actions/postsAction";
+import { ALL_POSTS_CLEAR, CREATE_NEW_POST_REQUEST } from "../../Redux/constants/postConstant";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 const CreatePost = ({ history }) => {
   toast.configure();
   const dispatch = useDispatch();
-  const { loading, categories } = useSelector((state) => state.allCategories);
-  const { loading: newPostLoading, post } = useSelector((state) => state.createNewPost);
+  const { loading, categories } = useSelector((state) => state.allCategories); //ctg state
+  const { loading: newPostLoading, post, error } = useSelector((state) => state.createNewPost); //create new post state
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -35,12 +37,19 @@ const CreatePost = ({ history }) => {
       images ? images : "https://assets.weforum.org/article/image/P-024s_6OEvTBP4g8SXT-eNv2yWuRkrEtCdS9rJQ-Bg.jpg"
     );
     dispatch(createNewPost(formData));
-
-    if (!newPostLoading && post !== "") {
-      toast.success("post created successfully");
-      history.push("/");
-    }
   };
+
+  // when post create successfully then run this block
+  useEffect(() => {
+    if (newPostLoading == false && post != "") {
+      dispatch({ type: ALL_POSTS_CLEAR }); // clear all posts Array
+
+      toast.success("post created successfully"); //trow successful message
+      history.push("/"); // push to homepage
+    } else {
+      error && toast.warning("please fill in all fields") && dispatch({ type: CREATE_NEW_POST_REQUEST }); //trow successful message
+    }
+  }, [post, error]);
 
   // onChange function
   const onChange = (e) => {
@@ -57,6 +66,12 @@ const CreatePost = ({ history }) => {
     }
   };
 
+  const discriptionHandler = (e) => {
+    console.log("dsc");
+
+    setDescription(e);
+    console.log(description);
+  };
   return (
     <>
       <div className="container my-5">
@@ -111,15 +126,20 @@ const CreatePost = ({ history }) => {
 
           {/* description */}
           <div class="col-md-12">
-            <label className="form-label">Description</label>
-            <textarea
+            <>
+              <label className="form-label">Description</label>
+              {/* <textarea
               name="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               class="form-control"
               aria-label="With textarea"
               style={{ height: 400 }}
-            ></textarea>
+            ></textarea> */}
+              {/* <ReactQuill theme="snow" value={description} style={{ height: 400 }} onChange={discriptionHandler} /> */}
+
+              <ReactQuill value={description} onChange={discriptionHandler} style={{ height: 400 }} />
+            </>
           </div>
           {/* <div className="col-12"> */}
           <button type="submit" className="btn btn-primary">

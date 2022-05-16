@@ -4,6 +4,12 @@
     font-family: Poppins !important;
 }
 
+.cardDescriptionSummery{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* ==>NAV */
 .nav-logo{
   text-decoration: none;
@@ -232,6 +238,7 @@ margin: 0 5px;
     margin: 0 20px 20px 20px;
   box-shadow: 2px 0px 8px 0px #00000033,
                 -2px 0px 8px 0px #00000033;
+    position: relative;
 }
 .postCard>img{
    border-radius: 15px !important;
@@ -244,6 +251,27 @@ margin: 0 5px;
   max-height: 140px !important;
   padding: 16px 2px !important;
 }
+.discSummery{
+  position: absolute;
+  overflow: hidden;
+  height: 200px;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
+  padding: 5px 0px 20px 0px;
+  line-height: 31px;
+    font-size: smaller;
+}
+.discSummeryV2{
+  position: absolute;
+  overflow: hidden;
+  height: 105px;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
+  padding: 5px 0px 20px 0px;
+  line-height: 31px;
+    font-size: smaller;
+}
+
 
 .post_avatar{
 width: 30px;
@@ -289,7 +317,10 @@ post_stat>p{
 .rc_body>h4{
     font-size: 17px;
     font-weight: bold;
+    max-height: 17px;
+    overflow: hidden;
 }
+
 
 
 /* ==>POST Details */

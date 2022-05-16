@@ -76,7 +76,13 @@ function PostDetails({ match }) {
                     </div>
                   </div>
 
-                  <p>{postDetails.description}</p>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: postDetails.description,
+                    }}
+                  >
+                    {/* {postDetails.description} */}
+                  </div>
 
                   {/* Like */}
                   <div className="post_stat postStat_V d-flex justify-content-start align-items-center">

@@ -15,6 +15,7 @@ function postCard({
   likesCount,
   commentCount,
 }) {
+  const plaintext = description.replace(/<[^>]+>/g, "");
   return (
     <>
       <div className="postCard card">
@@ -37,7 +38,15 @@ function postCard({
             <p className="card-text px-2">{authorName}</p>
           </div>
           {/* discription */}
-          <p className=" card-text py-3 overflow-hidden">{description}</p>
+          <div className=" card-text discSummery position-relative">
+            {/* <div
+              className="cardDescriptionSummery"
+              dangerouslySetInnerHTML={{
+                __html: description,
+              }}
+            ></div> */}
+            {plaintext}
+          </div>
 
           {/* post status */}
           <Status views={views} likes={likesCount} commentCount={commentCount} />

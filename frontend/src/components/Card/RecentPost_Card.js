@@ -16,6 +16,7 @@ function RecentPost_Card({
   images,
   _id,
 }) {
+  const plaintext = description.replace(/<[^>]+>/g, "");
   return (
     <>
       <div className="recentPost_card card">
@@ -44,7 +45,17 @@ function RecentPost_Card({
             <p className="card-text px-2">{authorName}</p>
           </div>
           {/* discription */}
-          <p className="card-text overflow-hidden py-3">{description}</p>
+          {/* <p className="card-text overflow-hidden py-3">{description}</p> */}
+          {/* discription */}
+          <div className=" card-text discSummeryV2 position-relative">
+            {/* <div
+              className="cardDescriptionSummery"
+              dangerouslySetInnerHTML={{
+                __html: description,
+              }}
+            ></div> */}
+            {plaintext}
+          </div>
 
           {/* post status */}
           <Status views={views} likes={likes} commentCount={commentCount} />
